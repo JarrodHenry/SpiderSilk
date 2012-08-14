@@ -1,0 +1,29 @@
+Milestone 1
+
+User Stories
+
+Users can logon to the site
+Users can register for the site
+Users can view other users pages
+Users can view their own pages
+Users can add stories
+Users can delete stories
+Users can view stories
+
+
+Milestone 2
+
+Users can add tags to their stories
+Users can view story lists by tags
+Users can search for stories by text
+
+Milestone 3
+
+Users can follow authors
+Users can mark stories favorite
+Users can view other users' favorite stories
+Users can "recommend" a story with a short blurb
+Stories will display all recommendations
+The front page will display the top 10 recommended stories of the all time
+The front page will display the top 10 recommended stories of the past 7 days
+This will mark the release of SpiderSilk 0.1
