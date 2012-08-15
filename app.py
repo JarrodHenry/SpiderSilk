@@ -16,6 +16,15 @@ def story(story_id):
 def user(user_name):
 	return "You have selected user %s " % user_name
 
+@app.route("/login/")
+def login():
+	return "This is the login page." 
+
+@app.route("/register/")
+def register():
+	return "This is the registration page."
+
+
 
 if __name__ == '__main__':
 	app.run()
