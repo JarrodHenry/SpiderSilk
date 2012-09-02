@@ -31,4 +31,9 @@ class User(Base):
 	def __repr__(self):
 		return "<User(%s)>" % (self.name)
 
+def addDefault():
+	defaultUser = User('admin','admin','admin')
+	session.add(defaultUser)
+	session.commit()
+
 

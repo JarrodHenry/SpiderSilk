@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, url_for, request
+from login import display_login_form, process_login_form
 
 app = Flask(__name__)
 app.debug = True
@@ -16,8 +17,13 @@ def story(story_id):
 def user(user_name):
 	return "You have selected user %s " % user_name
 
-@app.route("/login/")
+@app.route("/login/", methods=['GET', 'POST'])
 def login():
+	if request.method == 'POST':
+		return process_login_form()	
+	else:
+		return display_login_form()	
+
 	return "This is the login page." 
 
 @app.route("/register/")
