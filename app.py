@@ -1,12 +1,23 @@
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, session, redirect, render_template
 from login import display_login_form, process_login_form
+from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.debug = True
+app.secret_key = 'xf9xfeGxa1axa8xfb8dxe2xd2bWxeaxb71x0efei'
+bcrypt = Bcrypt(app)
+
+ 
 
 @app.route("/")
 def hello():
-	return "This will be the front page of SpiderSilk"
+	
+	if 'username' in session:
+		user = session['username']
+	else: 
+		user = None
+
+	return render_template('frontpage.html', user=user) 
 
 
 @app.route("/story/<int:story_id>")
@@ -24,7 +35,14 @@ def login():
 	else:
 		return display_login_form()	
 
-	return "This is the login page." 
+@app.route("/logout/")
+def logout():
+	if 'username' in session:
+		session.pop('username',None)
+
+	return redirect(url_for('hello'))
+
+
 
 @app.route("/register/")
 def register():

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block page_title %}{% endblock %}</title>
+	<H1> SpiderSilk Web Engine</H1>
+	 {% if session.username %}
+	 <I> Logged in: {{ session.username }} </I> 
+	 <P><A HREF="{{url_for('logout') }}"> Log out </A></P>
+
+	 {% else %}
+	 <P><A HREF="{{url_for('login') }}"> Log in </A></P>
+
+	 {% endif %}
+
+	 {% for message in get_flashed_messages() %}
+		<P> <B>{{ message }} </B> </P>
+	 {% endfor %}
+
+	<HR>
+    </head>
+    <body>
+        <section id="content">
+            {% block content %}
+            {% endblock %}
+        </section>
+        <footer id="footer">
+	<HR>
+		2012 Spidersilk 
+        </footer>
+    </body>
+</html>
