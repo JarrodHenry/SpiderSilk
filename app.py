@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, session, redirect, render_template
+from flask import Flask, url_for, request, session, redirect, render_template,flash
 from login import LoginForm
 from db import User, session as dbsession
 
@@ -38,10 +38,9 @@ def login():
 		login = form.username.data
 		password = form.password.data
 		user = dbsession.query(User).filter_by(name=login).first()
-
-		if password == user.password:
+		
+		if bcrypt.check_password_hash(user.password, password):
 			session['username'] = login
-			print "In"
 			return redirect(url_for('hello'))
 		else:
 			flash("Invalid login")

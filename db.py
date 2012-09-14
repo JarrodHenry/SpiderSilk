@@ -36,7 +36,7 @@ class User(Base):
 
 def addDefault():
 	""" Add admin with user / pass of admin """
-	defaultUser = User('admin','admin','admin')
+	defaultUser = User('admin','admin','$2a$12$AHg0z21DK3EX6PxvhURE0urYEgUbYO/VGdD9mRN/XFr372eM6kpYS')
 	session.add(defaultUser)
 	session.commit()
 
