@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
-from login import LoginForm
+from forms import LoginForm
 from db import User, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
