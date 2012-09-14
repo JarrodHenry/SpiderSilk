@@ -4,11 +4,13 @@
 
 {% block content %}
 Please login using the above form.
-<form action="" method="POST">
-	<P> Login: <input type="Text" name="login"></p>
-	<P> Password: <input type="Password" name ="password"></p>
-	<p><Button>Login</Button></P>
-</form>
+
+<form method="POST" action=".">
+{{ form.csrf_token }}
+{{ form.username.label }} {{ form.username }} <BR> 
+{{ form.password.label }} {{ form.password }}
+<p><input type="submit" value="Go"></P>
+</Form>
 
 {% endblock %}
 

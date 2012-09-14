@@ -1,5 +1,7 @@
 from flask import Flask, url_for, request, session, redirect, render_template
-from login import display_login_form, process_login_form
+from login import LoginForm
+from db import User, session as dbsession
+
 from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
@@ -30,10 +32,22 @@ def user(user_name):
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
-	if request.method == 'POST':
-		return process_login_form()	
+	form = LoginForm()
+
+	if  form.validate_on_submit():
+		login = form.username.data
+		password = form.password.data
+		user = dbsession.query(User).filter_by(name=login).first()
+
+		if password == user.password:
+			session['username'] = login
+			print "In"
+			return redirect(url_for('hello'))
+		else:
+			flash("Invalid login")
+			return redirect(url_for('login'))
 	else:
-		return display_login_form()	
+		return render_template('login.html', form=form)	
 
 @app.route("/logout/")
 def logout():
