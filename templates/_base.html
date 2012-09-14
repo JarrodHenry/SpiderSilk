@@ -8,8 +8,8 @@
 	 <P><A HREF="{{url_for('logout') }}"> Log out </A></P>
 
 	 {% else %}
-	 <P><A HREF="{{url_for('login') }}"> Log in </A></P>
-
+	 <P><A HREF="{{url_for('login') }}"> Log in </A></P>       
+	 <P><A HREF="{{url_for('register') }}"> Register </A></P>
 	 {% endif %}
 
 	 {% for message in get_flashed_messages() %}

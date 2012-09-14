@@ -59,7 +59,7 @@ def logout():
 
 @app.route("/register/")
 def register():
-	return "This is the registration page."
+	return render_template('register.html')
 
 
 
