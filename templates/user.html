@@ -1,0 +1,17 @@
+{% extends "_base.html" %}
+
+{% block page_title %}SpiderSilk - User Page - {{user.name}} {% endblock %}
+
+{% block content %}
+
+<H2> ~{{user.name}} </H2>
+
+<P><I> Species:{{user.species}}</I></P>
+<P><I> Gender :{{user.gender}}</I></P>
+<P><I> Bio    :{{user.bio}}</I></P>
+
+
+
+{% endblock %}
+
+
