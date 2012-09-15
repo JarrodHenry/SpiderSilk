@@ -20,10 +20,15 @@ Please register using the form.
 <P>{{ form.username.label }} {{ form.username }}</P>
 <P>{{ form.password.label }} {{ form.password }}</P> 
 <P>{{ form.confirm.label }} {{ form.confirm }}</P> 
+<P>{{ form.species.label }} {{ form.species }} </p>
+<P>{{ form.gender.label }} {{ form.gender }} </p>
+<P>{{ form.bio.label }} {{ form.bio(rows=20, cols=100) }}</P>
+<P>{{ form.email.label }} {{ form.email }} </p>
+<p>{{ form.adult.label }} {{ form.adult }} </P>
+<p>{{ form.accepttos.label }} {{ form.accepttos }} </p>
 <input type = "submit" value = "Register"> 
 </form>
 
 {% endblock %}
-
 
 

@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, TextField, PasswordField, Required, EqualTo, validators
+from flask.ext.wtf import Form, TextField, PasswordField, Required, EqualTo, validators, TextAreaField, BooleanField
 
 class LoginForm(Form):
 	username = TextField('Username', [Required()])
@@ -9,6 +9,12 @@ class RegistrationForm(Form):
 	username = TextField('Username', [Required()])
 	password = PasswordField('Password', [Required(), EqualTo('confirm', message='Passwords must match')])
 	confirm = PasswordField('Repeat Password')
+	species = TextField('Species')
+	gender = TextField('Gender') 
+	email = TextField('Email address', [Required(), validators.Email()])
+	bio = TextAreaField('Bio')
+	adult = BooleanField('I am an adult.')
+	accepttos = BooleanField('I accept the terms of service.', [validators.Required( message='You must accept the terms of service')])
 
 
 	

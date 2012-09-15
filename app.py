@@ -1,6 +1,6 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
 from forms import LoginForm, RegistrationForm
-from db import User, session as dbsession
+from db import User, refresh_db, addDefault, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
 
@@ -13,7 +13,6 @@ bcrypt = Bcrypt(app)
 
 @app.route("/")
 def hello():
-	
 	if 'username' in session:
 		user = session['username']
 	else: 
@@ -39,6 +38,10 @@ def login():
 		password = form.password.data
 		user = dbsession.query(User).filter_by(name=login).first()
 		
+		if user is None:
+			flash("No such user")
+			return redirect(url_for('login'))
+
 		if bcrypt.check_password_hash(user.password, password):
 			session['username'] = login
 			return redirect(url_for('hello'))
@@ -52,13 +55,7 @@ def login():
 def logout():
 	if 'username' in session:
 		session.pop('username',None)
-	
-	
-			
-
 	return redirect(url_for('hello'))
-
-
 
 @app.route("/register/", methods=['GET','POST'])
 def register():
@@ -75,6 +72,13 @@ def register():
 			if user is None:
 				pw_hash = bcrypt.generate_password_hash(form.password.data)
 				user = User(login, '', pw_hash)
+				user.gender = form.gender.data
+				user.species = form.species.data
+				user.bio = form.bio.data
+				user.email = form.email.data
+				user.minorflag = not form.adult.data
+				user.accepttos = True
+				
 				dbsession.add(user)
 				dbsession.commit()
 
@@ -86,6 +90,15 @@ def register():
 		
 	return render_template('register.html', form=form)
 
+@app.route("/resetdb/", methods = ['GET', 'POST'])
+def resetdb():
+	if request.method=='POST':
+		refresh_db()
+		addDefault()
+		flash('Database Reset -  Please remove this function prior to deployment')
+		return redirect(url_for('hello'))
+	else:
+		return render_template('resetdb.html')
 
 
 if __name__ == '__main__':
