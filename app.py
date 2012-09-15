@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
-from forms import LoginForm
+from forms import LoginForm, RegistrationForm
 from db import User, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
@@ -52,14 +52,39 @@ def login():
 def logout():
 	if 'username' in session:
 		session.pop('username',None)
+	
+	
+			
 
 	return redirect(url_for('hello'))
 
 
 
-@app.route("/register/")
+@app.route("/register/", methods=['GET','POST'])
 def register():
-	return render_template('register.html')
+	if 'username' in session:
+		flash("Cannot create new account while logged in.")
+		return redirect(url_for('hello'))
+	else:	
+		form = RegistrationForm()
+	
+		if form.validate_on_submit():
+			login = form.username.data
+			user = dbsession.query(User).filter_by(name=login).first()
+		
+			if user is None:
+				pw_hash = bcrypt.generate_password_hash(form.password.data)
+				user = User(login, '', pw_hash)
+				dbsession.add(user)
+				dbsession.commit()
+
+				flash("User Created")
+				return redirect(url_for('login'))
+			else:
+				flash("User already exists.")
+				return redirect(url_for('register'))
+		
+	return render_template('register.html', form=form)
 
 
 

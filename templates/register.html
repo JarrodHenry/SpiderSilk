@@ -4,8 +4,25 @@
 
 {% block content %}
 Please register using the form.
+{% if form.errors %}
+    <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
 
-Form will be here at some point.
+
+<form method="POST" action=".">
+{{ form.csrf_token() }}
+<P>{{ form.username.label }} {{ form.username }}</P>
+<P>{{ form.password.label }} {{ form.password }}</P> 
+<P>{{ form.confirm.label }} {{ form.confirm }}</P> 
+<input type = "submit" value = "Register"> 
+</form>
+
 {% endblock %}
 
 
