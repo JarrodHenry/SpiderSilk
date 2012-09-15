@@ -18,16 +18,30 @@ def hello():
 	else: 
 		user = None
 
-	return render_template('frontpage.html', user=user) 
+	# Get the list of users on the site
+  	userlist = dbsession.query(User.name).all()
+	
+	
+	return render_template('frontpage.html', user=user, userlist=userlist) 
 
 
 @app.route("/story/<int:story_id>")
 def story(story_id):
 	return "You have selected story %s" % story_id
 
+@app.route("/~<user_name>")
 @app.route("/user/<user_name>")
 def user(user_name):
-	return "You have selected user %s " % user_name
+		
+	user = dbsession.query(User).filter_by(name=user_name).first()
+
+	if user is None: 
+		flash("User not found")
+		return redirect(url_for('hello'))
+
+	else:
+		
+		return render_template('user.html', user=user)
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
@@ -99,7 +113,6 @@ def resetdb():
 		return redirect(url_for('hello'))
 	else:
 		return render_template('resetdb.html')
-
 
 if __name__ == '__main__':
 	app.run()
