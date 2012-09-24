@@ -43,11 +43,25 @@ def storynew():
 	else:
 		return render_template("storynew.html") 
 
-@app.route("/story/<int:story_id>")
+@app.route("/story/<int:story_id>", methods=['GET','POST'])
 def story(story_id):
-	story = dbsession.query(Story).filter_by(id=story_id).first()
-	return render_template('story.html', story=story)
+	user = None
+	if 'username' in session:
+		user = session['username']
 
+	if request.method=='GET':
+		story = dbsession.query(Story).filter_by(id=story_id).first()
+		return render_template('story.html', story=story, user=user)
+	elif request.method=='POST':
+		if user == request.form['user']:
+			story = dbsession.query(Story).filter_by(id=story_id).first()
+			dbsession.delete(story)
+			dbsession.commit()
+		else:
+			flash("Cannot delete story without permission")
+
+		return redirect(url_for('hello'))
+		
 @app.route("/~<user_name>")
 @app.route("/user/<user_name>")
 def user(user_name):

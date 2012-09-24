@@ -7,6 +7,7 @@
 	 <I> Logged in: {{ session.username }} </I> 
 	 <P><A HREF="{{url_for('logout') }}"> Log out </A></P>
 	<P><A HREF="{{url_for('storynew')}}">Create a New Story</A></P>
+	<P><A HREF="{{url_for('hello')}}">Front Page</A></P>
 	 {% else %}
 	 <P><A HREF="{{url_for('login') }}"> Log in </A></P>       
 	 <P><A HREF="{{url_for('register') }}"> Register </A></P>
