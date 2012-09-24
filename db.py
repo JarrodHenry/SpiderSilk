@@ -1,9 +1,9 @@
 # DB.py
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Text, Integer, Boolean
 
@@ -25,7 +25,8 @@ class User(Base):
 	password = Column(String, nullable=False)
 	minorflag = Column(Boolean)
 	accepttos = Column(Boolean)
-	
+	stories = relationship("Story", backref="users")
+
 	def __init__ (self, name, species, password):
 		self.name = name
 		self.species = species
@@ -33,6 +34,21 @@ class User(Base):
 
 	def __repr__(self):
 		return "<User(%s)>" % (self.name)
+
+class Story(Base):
+	""" Story Class Model """
+	__tablename__ = 'stories'
+	id = Column(Integer, primary_key=True, nullable=False)
+	uid = Column(Integer, ForeignKey('users.id'))
+	title = Column(String, nullable=False)
+	text = Column(Text)
+	adult = Column(Boolean)
+
+	def __init__(self, title):
+		self.title = title
+		
+	def __repr__(self):
+		return "<Story(%s)>" % (self.title)
 
 def addDefault():
 	""" Add admin with user / pass of admin """
