@@ -51,7 +51,11 @@ def story(story_id):
 
 	if request.method=='GET':
 		story = dbsession.query(Story).filter_by(id=story_id).first()
-		return render_template('story.html', story=story, user=user)
+		if story is None:
+			flash("Story does not exist!")
+			return redirect(url_for('hello'))
+		else:
+			return render_template('story.html', story=story, user=user)
 	elif request.method=='POST':
 		if user == request.form['user']:
 			story = dbsession.query(Story).filter_by(id=story_id).first()
@@ -147,6 +151,10 @@ def resetdb():
 	else:
 		return render_template('resetdb.html')
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('404.html'), 404
 if __name__ == '__main__':
 	app.run()
 
