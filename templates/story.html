@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+
+{% block page_title %}SpiderSilk - {{story.title}} {% endblock %}
+
+{% block content %}
+
+<H2> {{story.title}} by ~<A HREF="/~{{story.users.name}}">{{story.users.name}}</a></H2>
+
+<P> {{story.text }} </P>
+
+
+{% endblock %}
+
+

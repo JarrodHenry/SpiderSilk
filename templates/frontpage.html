@@ -5,12 +5,15 @@
 {% block content %}
 
 <H3> Welcome to the spidersilk front page. </H3>
-<P>
-	Users
-</P>
 
+<H4> Users </H4>
 {% for name in userlist %}
 	<a href="/user/{{name.name}}">{{name.name}}</a></br>
+{% endfor %}
+
+<H4> Stories </H4>
+{% for story in storylist %} 
+	<a href="/story/{{story.id}}">{{story.title}}</a><br>
 {% endfor %}
 
 

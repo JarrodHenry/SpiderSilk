@@ -16,5 +16,10 @@ class RegistrationForm(Form):
 	adult = BooleanField('I am an adult.')
 	accepttos = BooleanField('I accept the terms of service.', [validators.Required( message='You must accept the terms of service')])
 
+class StoryForm(Form):
+	''' This will allow users to add stories '''
+	title = TextField('Title', [Required()])
+	body = TextAreaField("Body", [Required()])
+	adult = BooleanField("Adult Topics")
 
 	

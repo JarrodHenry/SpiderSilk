@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+
+{% block page_title %}SpiderSilk - New Story Page{% endblock %}
+
+{% block content %}
+{% if form %}
+Add a new story here:
+{% if form.errors %}
+    <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<form method="POST" action="/story/new">
+{{ form.csrf_token() }}
+<P>{{ form.title.label }} {{form.title(cols=80)}} </P>
+<P>{{ form.body.label }} {{form.body(rows=30,cols=80) }} </P>
+<P>{{ form.adult.label}} {{form.adult}} </P>
+
+<input type = "submit" value = "Submit Story"> 
+</form>
+{% else %}
+<P> Must be logged in to contribute </P>
+{% endif %}
+
+{% endblock %}
+
+

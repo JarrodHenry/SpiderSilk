@@ -10,8 +10,13 @@
 <P><I> Gender :{{user.gender}}</I></P>
 <P><I> Bio    :{{user.bio}}</I></P>
 
+<H2> Stories: </H2>
 
-
+<ul>
+{% for story in user.stories %}
+	<li><A HREF=/story/{{story.id}}>{{ story.title }}</A></li>
+{% endfor %}
+</ul
 {% endblock %}
 
 

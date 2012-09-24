@@ -1,6 +1,6 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
-from forms import LoginForm, RegistrationForm
-from db import User, refresh_db, addDefault, session as dbsession
+from forms import LoginForm, RegistrationForm, StoryForm
+from db import User, Story, refresh_db, addDefault, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
 
@@ -20,21 +20,40 @@ def hello():
 
 	# Get the list of users on the site
   	userlist = dbsession.query(User.name).all()
+	storylist = dbsession.query(Story.title,Story.id).all()	
 	
-	
-	return render_template('frontpage.html', user=user, userlist=userlist) 
+	return render_template('frontpage.html', user=user, userlist=userlist, storylist=storylist) 
 
+@app.route("/story/new", methods=['GET','POST'])
+def storynew():
+	if 'username' in session:
+		user = session['username']
+		form = StoryForm()
+		if form.validate_on_submit():
+			uid = dbsession.query(User.id).filter_by(name=user).first()
+			newstory = Story(form.title.data)
+			newstory.text = form.body.data
+			newstory.uid = uid[0] 
+			newstory.adult = form.adult.data
+			dbsession.add(newstory)
+			dbsession.commit()
+			return redirect("~"+user)
+		
+		return render_template("storynew.html", form=form)
+	else:
+		return render_template("storynew.html") 
 
 @app.route("/story/<int:story_id>")
 def story(story_id):
-	return "You have selected story %s" % story_id
+	story = dbsession.query(Story).filter_by(id=story_id).first()
+	return render_template('story.html', story=story)
 
 @app.route("/~<user_name>")
 @app.route("/user/<user_name>")
 def user(user_name):
 		
 	user = dbsession.query(User).filter_by(name=user_name).first()
-
+	
 	if user is None: 
 		flash("User not found")
 		return redirect(url_for('hello'))
