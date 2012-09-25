@@ -6,7 +6,7 @@
 
 <H2> {{story.title}} by ~<A HREF="/~{{story.users.name}}">{{story.users.name}}</a></H2>
 
-<P> {{story.text }} </P>
+<P> {{story.text|safe }} </P>
 
 {% if story.users.name == user %}
 	<form method="POST" action="/story/{{story.id}}">

@@ -3,6 +3,7 @@ from forms import LoginForm, RegistrationForm, StoryForm
 from db import User, Story, refresh_db, addDefault, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
+import markdown
 
 app = Flask(__name__)
 app.debug = True
@@ -32,7 +33,7 @@ def storynew():
 		if form.validate_on_submit():
 			uid = dbsession.query(User.id).filter_by(name=user).first()
 			newstory = Story(form.title.data)
-			newstory.text = form.body.data
+			newstory.text = markdown.markdown(form.body.data)
 			newstory.uid = uid[0] 
 			newstory.adult = form.adult.data
 			dbsession.add(newstory)
