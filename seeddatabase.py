@@ -34,7 +34,7 @@ if __name__ == '__main__':
 		newstory = Story(loremipsum.generate_sentence()[2])
 		newstory.text = loremipsum.generate_paragraph()[2]
 		newstory.adult = True
-		newstory.uid = random.randrange(1000)
+		newstory.uid = random.randrange(1000)+1
 		dbsession.add(newstory)
 		dbsession.commit()
 
