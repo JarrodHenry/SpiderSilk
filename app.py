@@ -20,8 +20,11 @@ def hello():
 		user = None
 
 	# Get the list of users on the site
-  	userlist = dbsession.query(User.name).all()
-	storylist = dbsession.query(Story.title,Story.id).all()	
+  	userlist = dbsession.query(User.name).order_by(User.id.desc()).limit(30)
+	storylist = dbsession.query(Story.title,Story.id).order_by(Story.id.desc()).limit(30)	
+
+	#userlist = ""
+	#storylist = "" 
 	
 	return render_template('frontpage.html', user=user, userlist=userlist, storylist=storylist) 
 

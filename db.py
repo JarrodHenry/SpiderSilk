@@ -7,8 +7,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Text, Integer, Boolean
 
-engine = create_engine('sqlite:///spidersilk.db')
-#engine = create_engine('postgresql:///spidersilk')
+#engine = create_engine('sqlite:///spidersilk.db')
+engine = create_engine('postgresql:///spidersilk')
 
 session = scoped_session(sessionmaker(bind=engine, autoflush=False))
 
