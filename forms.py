@@ -21,5 +21,5 @@ class StoryForm(Form):
 	title = TextField('Title', [Required()])
 	body = TextAreaField("Body", [Required()])
 	adult = BooleanField("Adult Topics")
-
+	tags = TextField('Tags') 
 	

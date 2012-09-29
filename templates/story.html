@@ -9,7 +9,7 @@
 {% if story.tags %}
 <I>Tags: </I>
 {% for storytag in story.tags %}
-<I><A HREF="/tag/{{ storytag.id }}">   {{storytag.tagname }}   </A></I>
+<I><A HREF="/tag/{{ storytag.id }}">{{storytag.tagname }}</A>   </I>
 {% endfor %}
 {% endif %}
 

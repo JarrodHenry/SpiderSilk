@@ -19,6 +19,7 @@ Add a new story here:
 <form method="POST" action="/story/new">
 {{ form.csrf_token() }}
 <P>{{ form.title.label }} {{form.title(cols=80)}} </P>
+<P>{{ form.tags.label }} (Seperate with commas)  {{form.tags }} </P>
 <P>{{ form.body.label }} {{form.body(rows=30,cols=80) }} </P>
 <P>{{ form.adult.label}} {{form.adult}} </P>
 

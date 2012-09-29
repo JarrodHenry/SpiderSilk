@@ -39,6 +39,18 @@ def storynew():
 			newstory.text = markdown.markdown(form.body.data)
 			newstory.uid = uid[0] 
 			newstory.adult = form.adult.data
+			tagslist = form.tags.data
+			tagslist = tagslist.split(',')
+
+			for tagitem in tagslist:
+				tagitem = tagitem.strip()
+
+				tag = dbsession.query(Tag).filter_by(tagname=tagitem).first()
+				if tag is None:
+					tag = Tag(tagitem)
+		
+				newstory.tags.append(tag)
+			
 			dbsession.add(newstory)
 			dbsession.commit()
 			return redirect("~"+user)
