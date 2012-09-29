@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+
+{% block page_title %} SpiderSilk - Tag Lookup {% endblock %}
+
+{% block content %}
+
+{% if storylist %}
+
+<UL>
+{% for story in storylist %}
+
+<LI> <A HREF="/story/{{story.id}}"> {{ story.title }} </A></LI>
+
+
+{% endfor %}
+</UL>
+
+
+{% endif %}
+{% endblock %}
+
+
+
