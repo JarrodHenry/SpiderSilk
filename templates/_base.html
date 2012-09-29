@@ -4,7 +4,7 @@
         <title>{% block page_title %}{% endblock %}</title>
 	<H1> SpiderSilk Web Engine</H1>
 	 {% if session.username %}
-	 <I> Logged in: {{ session.username }} </I> 
+	 <I> Logged in: <A HREF="/user/{{ session.username }}">{{session.username}}</A> </I> 
 	 <P><A HREF="{{url_for('logout') }}"> Log out </A></P>
 	<P><A HREF="{{url_for('storynew')}}">Create a New Story</A></P>
 	<P><A HREF="{{url_for('hello')}}">Front Page</A></P>
