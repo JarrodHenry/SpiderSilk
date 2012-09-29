@@ -1,6 +1,6 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
 from forms import LoginForm, RegistrationForm, StoryForm
-from db import User, Story, refresh_db, addDefault, session as dbsession
+from db import User, Story, Tag, refresh_db, addDefault, session as dbsession
 
 from flask.ext.bcrypt import Bcrypt
 import markdown
@@ -154,6 +154,16 @@ def resetdb():
 		return redirect(url_for('hello'))
 	else:
 		return render_template('resetdb.html')
+
+@app.route("/tag/<tag_id>")
+def tagload(tag_id):
+	storylist = dbsession.query(Story).filter(Story.tags.any(Tag.id==tag_id)).all()
+	if storylist is None:
+		flash("No stories with this tag found")
+		return redirect(url_for('hello'))
+	else:
+		return render_template("tag.html", storylist=storylist)
+
 
 
 @app.errorhandler(404)
