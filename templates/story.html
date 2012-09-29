@@ -6,6 +6,13 @@
 
 <H2> {{story.title}} by ~<A HREF="/~{{story.users.name}}">{{story.users.name}}</a></H2>
 
+{% if story.tags %}
+<I>Tags: </I>
+{% for storytag in story.tags %}
+<I><A HREF="/tag/{{ storytag.id }}">   {{storytag.tagname }}   </A></I>
+{% endfor %}
+{% endif %}
+
 <P> {{story.text|safe }} </P>
 
 {% if story.users.name == user %}

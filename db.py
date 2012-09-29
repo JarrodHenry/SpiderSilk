@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
-from sqlalchemy.schema import Column
+from sqlalchemy.schema import Column, Table
 from sqlalchemy.types import String, Text, Integer, Boolean
 
 #engine = create_engine('sqlite:///spidersilk.db')
@@ -35,6 +35,12 @@ class User(Base):
 	def __repr__(self):
 		return "<User(%s)>" % (self.name)
 
+
+tagstory_association_table = Table('tagstory', Base.metadata,
+	Column('tag_id', Integer, ForeignKey('tags.id')),
+	Column('story_id', Integer, ForeignKey('stories.id'))
+)
+
 class Story(Base):
 	""" Story Class Model """
 	__tablename__ = 'stories'
@@ -43,12 +49,28 @@ class Story(Base):
 	title = Column(String, nullable=False)
 	text = Column(Text)
 	adult = Column(Boolean)
+	tags = relationship("Tag",
+		secondary = tagstory_association_table,
+		backref = 'stories')
 
 	def __init__(self, title):
 		self.title = title
 		
 	def __repr__(self):
 		return "<Story(%s)>" % (self.title)
+
+class Tag(Base):
+	"""Tags Model"""
+	__tablename__ = 'tags'
+	id = Column(Integer, primary_key=True, nullable=False)
+	tagname = Column(String, nullable=False)
+
+	def __init__(self, tagname):
+		self.tagname = tagname	
+
+	def __repr__(self):
+		return "<Tag(%s)>" % (self.tagname)
+
 
 def addDefault():
 	""" Add admin with user / pass of admin """
