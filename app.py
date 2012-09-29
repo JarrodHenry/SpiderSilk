@@ -44,6 +44,7 @@ def storynew():
 
 			for tagitem in tagslist:
 				tagitem = tagitem.strip()
+				tagitem = tagitem.lower()
 
 				tag = dbsession.query(Tag).filter_by(tagname=tagitem).first()
 				if tag is None:
