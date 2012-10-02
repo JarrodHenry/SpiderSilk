@@ -17,6 +17,11 @@
 	 {% for message in get_flashed_messages() %}
 		<P> <B>{{ message }} </B> </P>
 	 {% endfor %}
+	
+	<FORM method="POST" action="/search">
+		Search: <input type="text" name = "searchitem">
+		<input type="submit" value = "Search">
+	</form>
 
 	<HR>
     </head>
