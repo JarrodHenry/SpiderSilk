@@ -177,11 +177,28 @@ def tagload(tag_id):
 	else:
 		return render_template("tag.html", storylist=storylist)
 
+@app.route("/search", methods=['GET','POST'])
+def search():
+	if request.method == 'GET':	
+		flash("Please use the search box to search")
+		return redirect(url_for('hello'))
+
+
+	
+	term = request.form['searchitem']
+  	storylist = dbsession.query(Story).filter(Story.text.contains(term)).all()
+	storylist[1:1] = dbsession.query(Story).filter(Story.title.contains(term)).all()
+	storytagged = dbsession.query(Story).filter(Story.tags.any(Tag.tagname==term)).all()
+	
+		
+	return render_template("search.html", storytagged=storytagged, term=term, storylist=storylist)
+
 
 
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html'), 404
+
 if __name__ == '__main__':
 	app.run()
 
