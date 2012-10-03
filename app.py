@@ -20,13 +20,13 @@ def hello():
 		user = None
 
 	# Get the list of users on the site
-  	userlist = dbsession.query(User.name).order_by(User.id.desc()).limit(30)
+  	#userlist = dbsession.query(User.name).order_by(User.id.desc()).limit(30)
 	storylist = dbsession.query(Story.title,Story.id).order_by(Story.id.desc()).limit(30)	
 
 	#userlist = ""
 	#storylist = "" 
 	
-	return render_template('frontpage.html', user=user, userlist=userlist, storylist=storylist) 
+	return render_template('frontpage.html', user=user, storylist=storylist) 
 
 @app.route("/story/new", methods=['GET','POST'])
 def storynew():
