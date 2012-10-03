@@ -17,7 +17,7 @@ h2              { font-size: 1.2em; }
                   border: 1px solid #AACBE2; text-align: center; }
 .error          { background: #F0D6D6; padding: 0.5em; }
 h2.title		{ text-align: center; }
-.story			{ text-indent:50px; outline-color:gray; outline-width:3px; background:white; outline-style:solid;  padding: 20px; margin:25px;}
+.story			{ text-indent:50px; outline-color:gray; outline-width:3px; background:white; outline-style:solid;  padding: 20px; margin:25px; font-family:'Verdana';}
 
 .footer			{ text-align: right; font-size: 0.8em; padding:0.3em; }
 
