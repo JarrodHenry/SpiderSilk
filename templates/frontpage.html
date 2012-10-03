@@ -7,14 +7,18 @@
 <H3> Welcome to the spidersilk front page. </H3>
 
 <H4> Users </H4>
+<DIV class = "entries">
 {% for name in userlist %}
 	<a href="/user/{{name.name}}">{{name.name}}</a></br>
 {% endfor %}
+</DIV>
 
 <H4> Stories </H4>
+<DIV class = "entries">
 {% for story in storylist %} 
 	<a href="/story/{{story.id}}">{{story.title}}</a><br>
 {% endfor %}
+</DIV>
 
 
 {% endblock %}
