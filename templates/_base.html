@@ -6,7 +6,7 @@
 	<H1> SpiderSilk Web Engine</H1>
 	<div class="metanav">
 	 {% if session.username %}
-	 <I> Logged in: <A HREF="/user/{{ session.username }}">{{session.username}}</A> </I> 
+	 <I> Logged in: <A HREF="/user/{{ session.username }}">{{session.username}}</A> </I>     | 
 	 <A HREF="{{url_for('logout') }}"> Log out </A>   | 
 	<A HREF="{{url_for('storynew')}}">Create a New Story</A>    |
 	<A HREF="{{url_for('hello')}}">Front Page</A>     
