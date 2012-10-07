@@ -15,9 +15,15 @@
 if __name__ == '__main__':
 	password = '$2a$12$/xOeN.4B6wQsen5TgvOAMOUVvETJ8vDC8WqhjHRF2OYGSslxMmB2O'
 
-	from db import User, Story, addDefault, refresh_db, session as dbsession
+	from db import User, Story, Tag, addDefault, refresh_db, session as dbsession
 	import random
 	import loremipsum
+
+	refresh_db()
+ 	addDefault()
+	print "Added Admin account."
+
+	print "Adding users."
 
 	for adduser in range(1,1000):
 		username = "User%s" % (adduser)
@@ -28,15 +34,41 @@ if __name__ == '__main__':
 		user.minorflag = True
 		user.accepttos =True
 		dbsession.add(user)
-		dbsession.commit()
+	dbsession.commit()
+	print "Added users."
 
-	for addstories in range(1,20000):
+	print "Adding stories."
+	counter = 0
+	while counter < 20000:
 		newstory = Story(loremipsum.generate_sentence()[2])
 		newstory.text = loremipsum.generate_paragraph()[2]
 		newstory.adult = True
-		newstory.uid = random.randrange(1000)+1
+		newstory.uid = random.randrange(999)+1
 		dbsession.add(newstory)
+		counter = counter + 1
+	dbsession.commit()
+	print "Added stories."
+
+	print "Adding Tags."
+
+	for tagnumber in range(1,100):
+		tag = Tag("tag"+str(tagnumber))
+		dbsession.add(tag)
+	dbsession.commit()
+	print "Added tags."
+
+	print "Adding tags to stories"
+	for stories in range(1,20000):
+		story = dbsession.query(Story).filter_by(id = stories).first()
+		for newtagid in range(0,5):
+			tag = dbsession.query(Tag).filter_by(id = random.randrange(99)).first()
+			story.tags.append(tag)
 		dbsession.commit()
+		if stories % 500 == 0: 
+			print "Story " + str(stories) + " tagged."
+
+
+	
 
 
 
