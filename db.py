@@ -41,10 +41,6 @@ tagstory_association_table = Table('tagstory', Base.metadata,
 	Column('story_id', Integer, ForeignKey('stories.id'))
 )
 
-userfollowing_table = Table('following', Base.metadata,
-	Column('user', Integer, ForeignKey('users.id')),
-	Column('following', Integer, ForeignKey('users.id'))
-)
 
 
 class Story(Base):

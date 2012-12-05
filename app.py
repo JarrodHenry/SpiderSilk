@@ -202,6 +202,10 @@ def search():
 		
 	return render_template("search.html", storytagged=storytagged, term=term, storylist=storylist)
 
+@app.route('/user/follow/<user_id>', methods=['POST'])
+def followUser(user_id):
+	
+	return "User %s followed by user %s." % (user_id,session['username'])
 
 
 @app.errorhandler(404)
