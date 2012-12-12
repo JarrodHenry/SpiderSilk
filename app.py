@@ -91,6 +91,24 @@ def story(story_id):
 			flash("Cannot delete story without permission")
 
 		return redirect(url_for('hello'))
+
+@app.route("/story/fave/<int:story_id>", methods=['GET','POST'])
+def favestory(story_id):
+	user = None
+	if 'username' in session:
+		if request.method == 'POST':
+			user = session['username']
+			u = dbsession.query(User).filter_by(name=user).first()
+			s = dbsession.query(Story).filter_by(id=story_id).first()
+		
+			u.faves.append(s)
+			dbsession.add(u)
+			dbsession.commit()
+			flash("Fave'd story ")
+		
+	
+	return redirect('/story/'+str(story_id))
+
 		
 @app.route("/~<user_name>")
 @app.route("/user/<user_name>")

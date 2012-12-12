@@ -25,7 +25,15 @@
 {% for story in user.stories %}
 	<li><A HREF=/story/{{story.id}}>{{ story.title }}</A></li>
 {% endfor %}
-</ul
+</ul>
+
+<H2> Faves: </H2>
+<ul>
+{% for story in user.faves %}
+	<li><A HREF=/story/{{story.id}}>{{ story.title}}</A></li>
+{% endfor %}
+
+</ul>
 {% endblock %}
 
 
