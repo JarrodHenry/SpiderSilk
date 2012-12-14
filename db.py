@@ -35,7 +35,6 @@ class User(Base):
 	stories = relationship("Story", backref="users")
 	faves = relationship("Story", secondary='favorites')
 
-
 	def __init__ (self, name, species, password):
 		self.name = name
 		self.species = species
