@@ -14,6 +14,13 @@ session = scoped_session(sessionmaker(bind=engine, autoflush=False))
 
 Base = declarative_base(bind=engine)
 
+
+favstory_table = Table('favorites', Base.metadata,
+	Column('user_id', Integer, ForeignKey('users.id')),
+	Column('story_id', Integer, ForeignKey('stories.id'))
+)
+
+
 class User(Base):
 	""" Default User Class Model """
 	__tablename__ = 'users'
@@ -26,6 +33,8 @@ class User(Base):
 	minorflag = Column(Boolean)
 	accepttos = Column(Boolean)
 	stories = relationship("Story", backref="users")
+	faves = relationship("Story", secondary='favorites')
+
 
 	def __init__ (self, name, species, password):
 		self.name = name
@@ -41,6 +50,8 @@ tagstory_association_table = Table('tagstory', Base.metadata,
 	Column('story_id', Integer, ForeignKey('stories.id'))
 )
 
+
+
 class Story(Base):
 	""" Story Class Model """
 	__tablename__ = 'stories'
@@ -52,6 +63,7 @@ class Story(Base):
 	tags = relationship("Tag",
 		secondary = tagstory_association_table,
 		backref = 'stories')
+	favedby = relationship("User", secondary='favorites')
 
 	def __init__(self, title):
 		self.title = title

@@ -10,13 +10,30 @@
 <P><I> Gender :{{user.gender}}</I></P>
 <P><I> Bio    :{{user.bio}}</I></P>
 
+{% if session.username %}
+
+{% if session.username != user.name %}
+	<form method="POST" action="/user/follow/{{user.name}}">
+	<input type="hidden" name="user" value="{{user}}">
+	<P><input type="submit" value="Follow"></P>
+{% endif %}
+
+{% endif %}
 <H2> Stories: </H2>
 
 <ul>
 {% for story in user.stories %}
 	<li><A HREF=/story/{{story.id}}>{{ story.title }}</A></li>
 {% endfor %}
-</ul
+</ul>
+
+<H2> Faves: </H2>
+<ul>
+{% for story in user.faves %}
+	<li><A HREF=/story/{{story.id}}>{{ story.title}}</A></li>
+{% endfor %}
+
+</ul>
 {% endblock %}
 
 

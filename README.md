@@ -6,3 +6,5 @@ A website for authors to post their stories, follow other authors, and learn and
 The specs are located in the wiki.
 
 Milestone 1 completed on Sep 24 2012
+
+Milestone 2 completed mid October
