@@ -16,18 +16,20 @@
 <P><div class="story">
  {{story.text|safe }}
 	</div></P>
+{% if user %} 
+	{% if story.users.name == user %}
+		<form method="POST" action="/story/{{story.id}}">
+		<input type="hidden" name="user" value="{{user}}">	
+		<P><input type="submit" value="Delete"></P>
+	{% endif %}
 
-{% if story.users.name == user %}
-	<form method="POST" action="/story/{{story.id}}">
-	<input type="hidden" name="user" value="{{user}}">	
-	<P><input type="submit" value="Delete"></P>
+	{% if story.users.name != user %}
+		<form method="POST" action="/story/fave/{{story.id}}">
+		<input type="hidden" name="user" value="{{user}}">
+		<p><input type="submit" value="Fave"></P>
+	{% endif %}
 {% endif %}
-
-{% if story.users.name != user %}
-	<form method="POST" action="/story/fave/{{story.id}}">
-	<input type="hidden" name="user" value="{{user}}">
-	<p><input type="submit" value="Fave"></P>
-{% endif %}
+Faves: {{ story.favedby|count }} 
 
 {% endblock %}
 
