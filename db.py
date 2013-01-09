@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.schema import Column, Table
-from sqlalchemy.types import String, Text, Integer, Boolean
+from sqlalchemy.types import String, Text, Integer, Boolean, DateTime
 
 #engine = create_engine('sqlite:///spidersilk.db')
 engine = create_engine('postgresql:///spidersilk')
@@ -19,7 +19,6 @@ favstory_table = Table('favorites', Base.metadata,
 	Column('user_id', Integer, ForeignKey('users.id')),
 	Column('story_id', Integer, ForeignKey('stories.id'))
 )
-
 
 class User(Base):
 	""" Default User Class Model """
@@ -62,6 +61,7 @@ class Story(Base):
 	tags = relationship("Tag",
 		secondary = tagstory_association_table,
 		backref = 'stories')
+	recs = relationship("Reccomendation")
 	favedby = relationship("User", secondary='favorites')
 
 	def __init__(self, title):
@@ -69,6 +69,7 @@ class Story(Base):
 		
 	def __repr__(self):
 		return "<Story(%s)>" % (self.title)
+
 
 class Tag(Base):
 	"""Tags Model"""
@@ -81,6 +82,22 @@ class Tag(Base):
 
 	def __repr__(self):
 		return "<Tag(%s)>" % (self.tagname)
+
+class Reccomendation(Base):
+	"""Recommendation Model"""
+	__tablename__= 'recs'
+	id = Column(Integer, primary_key=True, nullable=False)
+	sid = Column(Integer, ForeignKey('stories.id'))
+	uid = Column(Integer, ForeignKey('users.id'))
+	uname = Column(Text)
+	date = Column(DateTime) 	
+	comment = Column(Text)
+
+	def __init__(self, comment):
+		self.comment = comment
+	
+	def __repr__(self):
+		return "<Rec(%s,%s)" % (self.sid, self.uid)
 
 
 def addDefault():

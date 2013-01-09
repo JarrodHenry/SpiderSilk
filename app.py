@@ -1,7 +1,7 @@
 from flask import Flask, url_for, request, session, redirect, render_template,flash
 from forms import LoginForm, RegistrationForm, StoryForm
-from db import User, Story, Tag, refresh_db, addDefault, session as dbsession
-
+from db import User, Story, Tag, Reccomendation, refresh_db, addDefault, session as dbsession
+from datetime import datetime
 from flask.ext.bcrypt import Bcrypt
 import markdown
 
@@ -110,6 +110,29 @@ def favestory(story_id):
 	return redirect('/story/'+str(story_id))
 
 		
+@app.route("/story/rec/<int:story_id>", methods=['GET','POST'])
+def recstory(story_id):
+	if 'username' in session:
+		if request.method == 'POST':
+			user = session['username']
+
+			s = dbsession.query(Story).filter_by(id=story_id).first()
+			u = dbsession.query(User).filter_by(name=user).first()
+
+			comment = request.form['comment']
+		
+	 		rec = Reccomendation(comment)
+			rec.uname = user 
+			rec.uid = u.id
+			rec.sid = story_id
+			rec.date = datetime.now()
+
+			s.recs.append(rec)
+			dbsession.add(s)
+			dbsession.commit()		
+	return redirect('/story/'+str(story_id))
+
+
 @app.route("/~<user_name>")
 @app.route("/user/<user_name>")
 def user(user_name):
@@ -185,15 +208,6 @@ def register():
 		
 	return render_template('register.html', form=form)
 
-@app.route("/resetdb/", methods = ['GET', 'POST'])
-def resetdb():
-	if request.method=='POST':
-		refresh_db()
-		addDefault()
-		flash('Database Reset -  Please remove this function prior to deployment')
-		return redirect(url_for('hello'))
-	else:
-		return render_template('resetdb.html')
 
 @app.route("/tag/<tag_id>")
 def tagload(tag_id):
