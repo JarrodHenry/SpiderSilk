@@ -38,8 +38,11 @@
 		<input type="submit" value = "Recommend"></p></form>
 	{% endif %}
 {% endif %}
-<H2> Faves ({{ story.favedby|count }})<P>
-<P>
+<H2> Faves ({{ story.favedby|count }})</h2><P>
+<P> 
+{% for favuser in story.favedby %}
+<B> <A HREF="/user/{{favuser.name}}">{{ favuser.name }} </A></B> </P>
+{% endfor %}
 
 <H2>Reccomendations ({{story.recs|count}})</H2>
 <P>
