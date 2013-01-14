@@ -121,5 +121,3 @@ def refresh_db():
 	drop_db()
 	init_db()
 	print "Database Refreshed"
-
-

@@ -1,7 +1,4 @@
 
-# This script is a metascript.  It creates another program
-# that can be executed to fill our database solidly
-
 # first, create 10 * 10 * 10 usernames
 
 # Then , create 20000 lorem ipsum 5 paragraph stories, with one paragraph titles
