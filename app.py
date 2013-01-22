@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, session, redirect, render_template, flash, g
+from flask import Flask, url_for, request, session, redirect, render_template, flash
 from forms import LoginForm, RegistrationForm, StoryForm
 from db import User, Story, Tag, Reccomendation, session as dbsession
 from datetime import datetime
