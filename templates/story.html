@@ -12,8 +12,9 @@
 <I><A HREF="/tag/{{ storytag.id }}">{{storytag.tagname }}</A>   </I>
 {% endfor %}
 {% endif %}
+<H2> Faves ({{ story.favedby|count }})</h2></P>
 
-<P><div class="story">
+<div class="story">
  {{story.text|safe }}
 	</div></P>
 {% if user %} 
@@ -22,9 +23,15 @@
 		<input type="hidden" name="user" value="{{user}}">	
 		<input type="submit" value="Delete"></P>
 		</form>
+{% endif %}
 
-		
-	{% endif %}
+<H2>Reccomendations ({{story.recs|count}})</H2>
+<P>
+{% for storyrec in story.recs|sort(attribute ='date') %}
+	<B>{{storyrec.uname}} {{storyrec.date.strftime('%Y-%m-%d %H:%M')}} </B> <I>{{storyrec.comment}} </I><P>
+{% endfor %}
+
+	<H2> Faves ({{ story.favedby|count }})</h2>
 
 	{% if story.users.name != user %}
 		<form method="POST" action="/story/fave/{{story.id}}">
@@ -38,17 +45,6 @@
 		<input type="submit" value = "Recommend"></p></form>
 	{% endif %}
 {% endif %}
-<H2> Faves ({{ story.favedby|count }})</h2><P>
-<P> 
-{% for favuser in story.favedby %}
-<B> <A HREF="/user/{{favuser.name}}">{{ favuser.name }} </A></B> </P>
-{% endfor %}
-
-<H2>Reccomendations ({{story.recs|count}})</H2>
-<P>
-{% for storyrec in story.recs %}
-	<B>{{storyrec.uname}} {{storyrec.date.strftime('%Y-%m-%d %H:%M')}} </B> <I>{{storyrec.comment}} </I><P>
-{% endfor %}
 
 {% endblock %}
 
