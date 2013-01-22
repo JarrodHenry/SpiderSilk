@@ -8,11 +8,13 @@
 
 <H4> Stories </H4>
 {% for story in storylist %} 
-	<div class = "boxed"> <a href="/story/{{story.id}}">{{story.title}}</a></div>
+	<div class = "boxed"> <a href="/story/{{story.id}}">{{story.title}} </a> <B>({{story.recs|count}})</B></div>
 {% endfor %}
 <BR>
-
-
+<H4> Topten All Time </H4>
+{% for story in topten %} 
+	<div class = "boxed"> <a href="/story/{{story.id}}">{{story.title}} </a> <B>({{story.recs|count}})</B></div>
+{% endfor %}
 {% endblock %}
 
 

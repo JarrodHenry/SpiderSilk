@@ -12,6 +12,7 @@
 <I><A HREF="/tag/{{ storytag.id }}">{{storytag.tagname }}</A>   </I>
 {% endfor %}
 {% endif %}
+<P>
 <H2> Faves ({{ story.favedby|count }})</h2></P>
 
 <div class="story">
@@ -27,6 +28,7 @@
 
 <H2>Reccomendations ({{story.recs|count}})</H2>
 <P>
+
 {% for storyrec in story.recs|sort(attribute ='date') %}
 	<B>{{storyrec.uname}} {{storyrec.date.strftime('%Y-%m-%d %H:%M')}} </B> <I>{{storyrec.comment}} </I><P>
 {% endfor %}
@@ -43,8 +45,10 @@
 		<input type="hidden" name = "user" value = "{{user}}">
 		<input type="textarea" size=120 name = "comment" >
 		<input type="submit" value = "Recommend"></p></form>
+		
 	{% endif %}
 {% endif %}
+
 
 {% endblock %}
 

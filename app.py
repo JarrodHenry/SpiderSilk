@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, session, redirect, render_template, flash
+from flask import Flask, url_for, request, session, redirect, render_template, flash, g
 from forms import LoginForm, RegistrationForm, StoryForm
 from db import User, Story, Tag, Reccomendation, session as dbsession
 from datetime import datetime
@@ -27,7 +27,13 @@ def hello():
 
     # Get the list of users on the site
     #userlist = dbsession.query(User.name).order_by(User.id.desc()).limit(30)
-    storylist = dbsession.query(Story.title, Story.id).order_by(Story.id.desc()).limit(30)
+    storylist = dbsession.query(Story).order_by(Story.id.desc()).limit(30)
+
+    # topten = dbsession.query(Story).group_by(Story.id).order_by(len(Story.recs)).limit(10)
+    # select sid, count(*) from recs group by sid order by count(*) desc limit 10;
+    # the above is what we want..  top ten stories from forever
+    # Then repeat that for top ten stories for last 7 days.
+
     return render_template('frontpage.html', user=user, storylist=storylist)
 
 
@@ -109,7 +115,10 @@ def recstory(story_id):
 
             s = dbsession.query(Story).filter_by(id=story_id).first()
             u = dbsession.query(User).filter_by(name=user).first()
-
+            for rec in s.recs:
+                if rec.uname == user:
+                    flash("Cannot reccomend more than once.")
+                    return redirect('/story/' + str(story_id))
             comment = request.form['comment']
             rec = Reccomendation(comment)
             rec.uname = user

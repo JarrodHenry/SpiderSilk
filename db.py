@@ -94,7 +94,7 @@ class Reccomendation(Base):
         self.comment = comment
 
     def __repr__(self):
-        return "<Rec(%s,%s)" % (self.sid, self.uid)
+        return "<Rec(%s,%s)>" % (self.sid, self.uid)
 
 
 def addDefault():

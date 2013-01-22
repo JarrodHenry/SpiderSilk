@@ -1,0 +1,5 @@
+select sid, count(*) from recs group by sid order by count(*) desc
+ limit 10;
+
+-- Gets the top ten SID's by recs.. 
+
