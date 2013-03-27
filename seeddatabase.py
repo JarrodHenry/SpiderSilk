@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     print "Adding users."
 
-    for adduser in range(1, 1000):
+    for adduser in xrange(1, 1000):
         username = "User%s" % (adduser)
         user = User(username, '', password)
         user.species = 'Automatic'
@@ -49,16 +49,16 @@ if __name__ == '__main__':
 
     print "Adding Tags."
 
-    for tagnumber in range(1, 100):
+    for tagnumber in xrange(1, 100):
         tag = Tag("tag" + str(tagnumber))
         dbsession.add(tag)
     dbsession.commit()
     print "Added tags."
 
     print "Adding tags to stories"
-    for stories in range(1, 20000):
+    for stories in xrange(1, 20000):
         story = dbsession.query(Story).filter_by(id=stories).first()
-        for newtagid in range(0, 5):
+        for newtagid in xrange(0, 5):
             tag = dbsession.query(Tag).filter_by(id=random.randrange(99)).first()
             story.tags.append(tag)
         dbsession.commit()
@@ -66,7 +66,7 @@ if __name__ == '__main__':
             print "Story " + str(stories) + " tagged."
 
     print "Adding faves"
-    for user in range(1, 1000):
+    for user in xrange(1, 1000):
         u = dbsession.query(User).filter_by(id=user).first()
         for newfave in range(0, random.randrange(30)):
             s = dbsession.query(Story).filter_by(id=random.randrange(20000)).first()
@@ -76,9 +76,9 @@ if __name__ == '__main__':
             print "User " + str(user) + " faves set."
 
     print "Adding between zero and thirty reccomendations to stories"
-    for stories in range(1, 20000):
+    for stories in xrange(1, 20000):
         story = dbsession.query(Story).filter_by(id=stories).first()
-        for newrec in range(0, random.randrange(30)):
+        for newrec in xrange(0, random.randrange(30)):
             rec = Reccomendation("this is a good story")
             rec.uid = random.randrange(99) + 1
             u = dbsession.query(User).filter_by(id=rec.uid).first()
