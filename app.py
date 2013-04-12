@@ -8,12 +8,8 @@ import markdown
 app = Flask(__name__)
 app.debug = True
 
-#### CHANGE THIS BEFORE DEPLOYMENT
-app.secret_key = 'xf9xfeGxa1axa8xfb8dxe2xd2bWxeaxb71x0efei'
-###################################
-#
-# TODO: Factor this out in deployment/install milestone
-#
+#### CONFIGURE BY ADDING IN A SECRET KEY
+# app.secret_key = 'CHANGEME' 
 
 bcrypt = Bcrypt(app)
 
